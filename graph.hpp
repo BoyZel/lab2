@@ -1,4 +1,6 @@
-#include <node.h>
+#ifndef _GRAPH_HPP
+#define _GRAPH_HPP
+#include "node.hpp"
 
 using namespace std;
 template <typename T> class Graph{
@@ -8,4 +10,5 @@ template <typename T> class Graph{
 	public:
 	void insert();
 	void show();
-}
+};
+#endif

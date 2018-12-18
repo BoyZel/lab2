@@ -1,9 +1,12 @@
+#ifndef _NODE_HPP
+#define _NODE_HPP
 #include <vector>
 using namespace std;
-class Graph;
+template <typename T> class Graph;
 template <typename T> class Node{
-	friend class Graph;
+	friend class Graph < T >;
 	private:
 	T data;
-	vector<Node> neighbours;
-}
+	vector<int> neighbours;
+};
+#endif
