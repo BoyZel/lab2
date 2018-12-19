@@ -11,5 +11,7 @@ template <typename T> class Node{
 	bool visited;
 	int parent;
 	vector<int> neighbours;
+	public:
+	void GetNode();
 };
 #endif

@@ -6,8 +6,9 @@ using namespace std;
 int main(){
 	Graph < int > graph1;
 	graph1.insert();
-	graph1.show();
-	graph1.BFS(0);
+	int a;
+	cin>>a;
+	graph1.BFS(a);
 	cout<<endl<<endl;
 	graph1.show();
 	return 0;

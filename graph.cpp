@@ -110,9 +110,11 @@ void Graph <T> :: BFS(int r){
 				int tmp2;
 				tmp2 = nodes[tmp].neighbours[i];
 				if( nodes[tmp2].visited ==0 ){
+					if(nodes[tmp2].parent==-1){
 					nodes[tmp2].distance = nodes[tmp].distance + 1;
 					nodes[tmp2].parent = tmp;
 					waiting.push( tmp2 ) ;
+					}
 				}
 			}
 		}
