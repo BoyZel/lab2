@@ -62,11 +62,7 @@ void Graph <T> :: show(){
 	cout << "ROOT " << root << endl;
 	for(int i = 0; i < NumberOfNodes ; i++){
 		cout << "NODE " << i << endl;
-		cout << nodes[i].data << " PARENT: " << nodes[i].parent;
-		cout << " DISTANCE: " << nodes[i].distance << endl;
-		cout << " NEIGHBOURS: ";
-		for(int j = 0; j < nodes[i].neighbours.size(); j++)
-			cout << nodes[i].neighbours[j] << " ";
+		nodes[i].GetNode();
 		cout << endl;
 	}
 }

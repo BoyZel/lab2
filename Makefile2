@@ -1,7 +1,9 @@
-list: catch.o graph.o
-	g++ catch.o graph.o -o catch
+list: catch.o graph.o node.o
+	g++ catch.o graph.o node.o -o catch
 	rm *o
 catch.o: catch.cpp
 	g++ -c catch.cpp
 graph.o: graph.cpp
 	g++ -c graph.cpp
+node.o: node.cpp
+	g++ -c node.cpp
