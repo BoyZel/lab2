@@ -7,6 +7,9 @@ template <typename T> class Node{
 	friend class Graph < T >;
 	private:
 	T data;
+	int distance;
+	bool visited;
+	int parent;
 	vector<int> neighbours;
 };
 #endif
