@@ -9,11 +9,14 @@ template <typename T> class Graph{
 	int root;
 	vector< Node<T> > nodes;
 	public:
-	void insert();
-	void show();
+	int GetNumberOfNodes();
+	int GetRoot();
+	Node <T> *GetNode( int );
+	
+	void SetNumberOfNodes( int );
+	void SetRoot( int );
+	void SetVertice( int, int );
 	void BFS ( int );
 	void test();
-	int GetDistance( int );
-	int GetParent( int );
 };
 #endif

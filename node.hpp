@@ -2,9 +2,7 @@
 #define _NODE_HPP
 #include <vector>
 using namespace std;
-template <typename T> class Graph;
 template <typename T> class Node{
-	friend class Graph < T >;
 	private:
 	T data;
 	int distance;
@@ -12,6 +10,16 @@ template <typename T> class Node{
 	int parent;
 	vector<int> neighbours;
 	public:
-	void GetNode();
+	T GetData();
+	int GetDistance();
+	bool GetVisited();
+	int GetParent();
+	int GetNumOfNeighbours();
+	int GetNeighbour(int);
+	void SetParent (int);
+	void SetData(T);
+	void SetDistance(int);
+	void SetVisited(bool);
+	void AddNeighbour(int);
 };
 #endif

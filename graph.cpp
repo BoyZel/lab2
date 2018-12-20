@@ -1,114 +1,102 @@
 #include "graph.hpp"
-#include <iostream>
 #include <queue>
+#include <iostream>
 using namespace std;
+
 template <typename T>
-void Graph <T> :: insert(){
-	int n,m;
-	cin >> n >> m;
-	NumberOfNodes = n;
-	Node <T> node;
-	nodes.assign(n,node);
-	for(int i = 0; i < n; i++){
-		T dana;
-		cin >> dana;
-		nodes[i].data = dana;
-		nodes[i].parent = -1;
-		nodes[i].distance = -1;
-		nodes[i].visited = 0;
-	}
-	for(int i = 0; i < m; i++){
-		int a, b;
-		cin >> a >> b;
-		nodes[a].neighbours.push_back(b);
-		nodes[b].neighbours.push_back(a);
-	}
+int Graph <T> :: GetNumberOfNodes(){
+	return NumberOfNodes;
 }
+
+template <typename T>
+int Graph <T> :: GetRoot(){
+	return root;
+}
+
+template <typename T>
+Node<T> *Graph <T> :: GetNode(int a){
+	return &nodes[a];
+}
+
+template <typename T>
+void Graph <T> :: SetNumberOfNodes(int a){
+	NumberOfNodes = a;
+	Node <T> node;
+	nodes.assign(a,node);
+}
+
+template <typename T>
+void Graph <T> :: SetVertice( int a, int b ){
+	Node <T> *node;
+	node = GetNode( a );
+	node->AddNeighbour( b );
+	node = GetNode( b );
+	node->AddNeighbour( a );
+}
+
+template <typename T>
+void Graph <T> :: SetRoot( int a ){
+	root = a;
+}
+
 template <typename T>
 void Graph <T> :: test(){
-	NumberOfNodes=8;
-	Node <T> node;
-	nodes.assign(8,node);
+	SetNumberOfNodes(8);
 	for(int i=0; i<8; i++){
-		nodes[i].data = i;
-		nodes[i].parent = -1;
-		nodes[i].distance = -1;
-		nodes[i].visited = 0;
+		Node <int> *node = GetNode( i );
+		node->SetData(i) ;
+		node->SetParent(-1);
+		node->SetDistance(-1);
+		node->SetVisited(0);
 	}
-		nodes[1].neighbours.push_back(2);
-		nodes[2].neighbours.push_back(1);
-		nodes[1].neighbours.push_back(0);
-		nodes[0].neighbours.push_back(1);
-		nodes[0].neighbours.push_back(6);
-		nodes[6].neighbours.push_back(0);
-		nodes[0].neighbours.push_back(5);
-		nodes[5].neighbours.push_back(0);
-		nodes[6].neighbours.push_back(5);
-		nodes[5].neighbours.push_back(6);
-		nodes[6].neighbours.push_back(4);
-		nodes[4].neighbours.push_back(6);
-		nodes[6].neighbours.push_back(3);
-		nodes[3].neighbours.push_back(6);
-		nodes[5].neighbours.push_back(5);
-		nodes[5].neighbours.push_back(5);
-		nodes[5].neighbours.push_back(7);
-		nodes[7].neighbours.push_back(5);
-		nodes[5].neighbours.push_back(4);
-		nodes[4].neighbours.push_back(5);
-}
-
-template <typename T>
-void Graph <T> :: show(){
-	cout << "ROOT " << root << endl;
-	for(int i = 0; i < NumberOfNodes ; i++){
-		cout << "NODE " << i << endl;
-		nodes[i].GetNode();
-		cout << endl;
-	}
-}
-
-template < typename T>
-int Graph <T> :: GetDistance( int a ){
-	return nodes[a].distance;
-}
-
-template < typename T>
-int Graph <T> :: GetParent( int a ){
-	return nodes[a].parent;
+		SetVertice(1,2);
+		SetVertice(1,0);
+		SetVertice(0,6);
+		SetVertice(0,5);
+		SetVertice(6,5);
+		SetVertice(6,4);
+		SetVertice(6,3);
+		SetVertice(5,5);
+		SetVertice(5,7);
+		SetVertice(5,4);
 }
 
 template < typename T >
 void Graph <T> :: BFS(int r){
-	root=r;
-	for( int i=0; i<NumberOfNodes; i++ ){
-		nodes[i].distance = -1;
-		nodes[i].visited = 0;
-		nodes[i].parent=-1;
+	SetRoot(r);
+	for( int i=0; i<GetNumberOfNodes(); i++ ){
+		Node <T> *node = GetNode(i);
+		node->SetDistance(-1);
+		node->SetVisited(0);
+		node->SetParent(-1);
 	}
 	queue< int > waiting; 
-	nodes[r].distance = 0;
-	nodes[r].visited = 1;
-	for( int i = 0; i < nodes[r].neighbours.size(); i++){ //processing the root
+	Node <T> *node = GetNode(r);
+	node->SetDistance(0);
+	node->SetVisited(1);
+	for( int i = 0; i < node->GetNumOfNeighbours(); i++){ //processing the root
 		int tmp;
-		tmp = nodes[r].neighbours[i];
+		tmp = node->GetNeighbour(i);
+		Node <T> *nodetmp = GetNode(tmp);
 		if( tmp!=r ){
-			nodes[tmp].distance = nodes[r].distance + 1;
-			nodes[tmp].parent = r;
+			nodetmp->SetDistance( node->GetDistance() + 1);
+			nodetmp->SetParent( r );
 			waiting.push( tmp ) ;
 		}
 	}
 	while( waiting.empty() == 0 ){
 		int tmp=waiting.front();
+		Node <T> *nodetmp = GetNode(tmp);
 		waiting.pop();
-		if( nodes[tmp].visited == 0 ){
-			nodes[tmp].visited = 1;
-			for( int i = 0; i < nodes[tmp].neighbours.size(); i++){
-				int tmp2;
-				tmp2 = nodes[tmp].neighbours[i];
-				if( nodes[tmp2].visited ==0 ){
-					if(nodes[tmp2].parent==-1){
-					nodes[tmp2].distance = nodes[tmp].distance + 1;
-					nodes[tmp2].parent = tmp;
+		if( nodetmp->GetVisited() == 0 ){
+			nodetmp->SetVisited(1);
+			for( int i = 0; i < nodetmp->GetNumOfNeighbours(); i++){
+				int tmp2 = nodetmp->GetNeighbour(i);
+				Node <T> *nodetmp2 = GetNode(tmp2);
+				if( nodetmp2->GetVisited()==0 ){
+					if(nodetmp2->GetParent() == -1){
+					nodetmp2->SetDistance(nodetmp->GetDistance() + 1);
+					nodetmp2->SetParent( tmp );
 					waiting.push( tmp2 ) ;
 					}
 				}

@@ -1,5 +1,5 @@
-list: main.o graph.o node.o
-	g++ main.o graph.o node.o -o exe
+list: main.o graph.o node.o interface.o
+	g++ main.o graph.o node.o interface.o -o exe
 	rm *o
 main.o: main.cpp
 	g++ -c main.cpp
@@ -7,3 +7,5 @@ graph.o: graph.cpp
 	g++ -c graph.cpp
 node.o: node.cpp
 	g++ -c node.cpp
+interface.o: interface.cpp
+	g++ -c interface.cpp
